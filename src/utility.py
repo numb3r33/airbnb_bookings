@@ -34,3 +34,13 @@ def plot_crosstab_distribution(df):
 
 	dim = int(np.ceil(num_categories ** 0.5))
 	plot_variable_distribution(df, categories, dim)
+
+def create_days_since_creation_mapping(days_since_creation):
+	if pd.isnull(days_since_creation):
+		return -9999 # represents missing value
+	elif days_since_creation == 0:
+		return 0
+	elif days_since_creation > 0 and days_since_creation <= 365:
+		return 1
+	elif days_since_creation < 0 and days_since_creation >= -365:
+		return 2
