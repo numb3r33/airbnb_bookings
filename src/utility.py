@@ -1,5 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
+import scipy as sp
 
 def count_missing_values(df):
 	"""
@@ -44,3 +46,31 @@ def create_days_since_creation_mapping(days_since_creation):
 		return 1
 	elif days_since_creation < 0 and days_since_creation >= -365:
 		return 2
+
+def chi_square_test(X, y):
+	"""
+
+	Note: (the smaller v, the lower the correlation)
+
+	Arguments
+	---------
+
+	X - single feature
+	y - target
+
+	Returns
+	-------
+
+	p_val    : P-value
+	cramer_v : Cramer-V value
+	"""
+
+	cont_table = pd.crosstab(X, y)
+	chi2_statistic, p_val, dof, expected = sp.stats.chi2_contingency(cont_table.values, correction=False)
+	print('P-value for the pair : %f'%(p_val))
+
+
+	cramer_v = np.sqrt(chi2_statistic / (len(cont_table) * min(cont_table.shape[0], cont_table.shape[1])))
+	print('Cramer-V value for pair : %f'%(cramer_v))
+
+	return p_val, cramer_v
