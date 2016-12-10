@@ -74,3 +74,7 @@ def chi_square_test(X, y):
 	print('Cramer-V value for pair : %f'%(cramer_v))
 
 	return p_val, cramer_v
+
+
+def convert_ts_datetime(ts):
+	return pd.to_datetime(ts, format='%Y%m%d%H%M%S')
